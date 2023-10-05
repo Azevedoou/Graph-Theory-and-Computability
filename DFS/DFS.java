@@ -34,12 +34,13 @@ public class DFS{
         void DFS(int vertice) {
             boolean visitado[] = new boolean[V + 1];
             int tempo = 1;
-            int TD[] = new int[V + 1];
-            int TT[] = new int[V + 1];
-            int pai[] = new int[V + 1];
+            int TD[] = new int[V + 1]; //Tempo de Descoberta.
+            int TT[] = new int[V + 1]; //Tempo de Término.
+            int pai[] = new int[V + 1]; // Vértice Pai (não foi utilizado na implementação do DFS, porém poderia ter sido, deixei para casos futuros).
             visitado[vertice] = true;
             Set<String> visitedEdges = new HashSet<>(); // Armazera arestas visitadas como strings "v->adjacente".
 
+            // Listas das arestas do vértice escolhido pelo usuário.
             List<String> arestaRetorno = new ArrayList<String>();
             List<String> arestaCruzamento = new ArrayList<String>();
             List<String> arestaAvanco = new ArrayList<String>();
@@ -63,19 +64,19 @@ public class DFS{
                             System.out.println("Aresta de árvore: " + edge);
                             visitedEdges.add(edge);
                         }
-                        pilha.push(adjacente);
+                        pilha.push(adjacente); // Adiciona elementos a pilha.
                         pai[adjacente] = v;
                         visitado[adjacente] = true;
                         flag = false;
                         break;
-                    } else if (v == arestaAnalise) {// Verifica se é o vértice escolhido pelo usuário.
-                        if (TT[adjacente] == 0) {
+                    } else if (v == arestaAnalise) { // Verifica se é o vértice escolhido pelo usuário.
+                        if (TT[adjacente] == 0) { // Verificação da aresta de retorno.
                             String edge = v + "->" + adjacente;
                             if (!visitedEdges.contains(edge)) {
                                 arestaRetorno.add(edge);
                                 visitedEdges.add(edge);
                             }
-                        } else if (TD[v] < TD[adjacente]) {
+                        } else if (TD[v] < TD[adjacente]) { // Verificação da aresta de avanço.
                             String edge = v + "->" + adjacente;
                             if (!visitedEdges.contains(edge)) {
                                 arestaAvanco.add(edge);
@@ -83,7 +84,7 @@ public class DFS{
                             }
                         } else {
                             String edge = v + "->" + adjacente;
-                            if (!visitedEdges.contains(edge)) {
+                            if (!visitedEdges.contains(edge)) { // Verificação da aresta de cruzamento.
                                 arestaCruzamento.add(edge);
                                 visitedEdges.add(edge);
                             }
@@ -96,6 +97,8 @@ public class DFS{
                     pilha.pop();
                 }
             }
+
+            // Print das arestas de retorno, cruzamento e avaço do vértice escolhido pelo usuário.
             System.out.println("----------------------");
             System.out.println("Arestas de Retorno do vértice "+arestaAnalise+" ");
             for(int i=0; i<arestaRetorno.size(); i++){
@@ -113,7 +116,6 @@ public class DFS{
             }
             System.out.println("----------------------");
         }
-        
     }
     public static void main(String[] args) {
         String nomeArq;
